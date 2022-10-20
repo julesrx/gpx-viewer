@@ -13,7 +13,7 @@ jobs:
       run: |
           npm i -g pnpm@7
           pnpm i
-          pnpm publish
+          pnpm gh-build
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@4.1.5
       with:

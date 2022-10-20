@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
-    "publish": "vue-tsc --noEmit && vite build --base /gpx-viewer/",
+    "gh-build": "vue-tsc --noEmit && vite build --base /gpx-viewer/",
     "preview": "vite preview"
   },
   "dependencies": {
