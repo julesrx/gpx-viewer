@@ -5,6 +5,11 @@ import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
+import VectorLayer from 'ol/layer/Vector';
+import VectorSource from 'ol/source/Vector';
+import Feature from 'ol/Feature';
+import Point from 'ol/geom/Point';
+import { circular } from 'ol/geom/Polygon';
 
 import type { Route } from '../gpx';
 
@@ -26,6 +31,16 @@ onMounted(() => {
       zoom: 10
     })
   });
+
+  const source = new VectorSource();
+  const layer = new VectorLayer({ source: source });
+
+  source.clear(true);
+  for (const point of props.route.points) {
+    source.addFeatures([new Feature(new Point(fromLonLat([point.lon, point.lat])))]);
+  }
+
+  map.addLayer(layer);
 
   console.log(map);
 });
