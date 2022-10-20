@@ -30,3 +30,9 @@ const onChange = (e: Event) => {
   <input type="file" @change="onChange" />
   <MapView :route="route" v-if="route" />
 </template>
+
+<style scoped>
+input {
+  height: var(--input-height);
+}
+</style>

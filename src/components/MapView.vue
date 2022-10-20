@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import 'ol/ol.css';
 import Map from 'ol/Map';
 import OSM from 'ol/source/OSM';
 import View from 'ol/View';
@@ -36,6 +37,6 @@ onMounted(() => {
 
 <style scoped>
 #map-view {
-  height: 800px;
+  height: calc(100vh - var(--input-height));
 }
 </style>
