@@ -9,13 +9,22 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
-import { circular } from 'ol/geom/Polygon';
 
-import type { Route } from '../gpx';
+import type { Route, Coordinate } from '../gpx';
 
 const props = defineProps<{ route: Route }>();
 
 const firstPoint = computed(() => props.route.points[0]);
+const average = computed<Coordinate>(() => {
+  const pointCount = props.route.points.length;
+  const lonAv = props.route.points.map(p => p.lon).reduce((a, b) => a + b, 0) / pointCount;
+  const latAv = props.route.points.map(p => p.lat).reduce((a, b) => a + b, 0) / pointCount;
+
+  return {
+    lon: lonAv,
+    lat: latAv
+  };
+});
 
 let map: Map;
 onMounted(() => {
@@ -27,7 +36,7 @@ onMounted(() => {
       })
     ],
     view: new View({
-      center: fromLonLat([firstPoint.value.lon, firstPoint.value.lat]),
+      center: fromLonLat([average.value.lon, firstPoint.value.lat]),
       zoom: 10
     })
   });
