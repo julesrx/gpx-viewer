@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "chota": "^0.8.0",
+    "ol": "^7.1.0",
     "vue": "^3.2.41"
   },
   "devDependencies": {

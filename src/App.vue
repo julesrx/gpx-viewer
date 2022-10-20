@@ -1,14 +1,17 @@
 <script setup lang="ts">
+import type { Route } from './gpx';
 import { parseXml } from './xml';
 import { getRoute } from './gpx';
-import type { Route } from './gpx';
+import MapView from './components/MapView.vue';
 
 const xml = ref<string>();
-const route = ref<Route>();
+const route = ref<Route | null>(null);
 
 const onChange = (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files || !input.files.length) return;
+
+  route.value = null;
 
   const gpx = input.files[0];
 
@@ -25,21 +28,5 @@ const onChange = (e: Event) => {
 
 <template>
   <input type="file" @change="onChange" />
-
-  <template v-if="route">
-    <h1>{{ route.name }}</h1>
-    <p>Created {{ route.createdDate }}</p>
-
-    <h3>Points of interest</h3>
-    <ul>
-      <li v-for="(p, i) in route.points" :key="i">lat: {{ p.lat }}, lon: {{ p.lon }}</li>
-    </ul>
-
-    <h3>Trace segments</h3>
-    <ul>
-      <li v-for="(s, i) in route.trace.segments" :key="i">lat: {{ s.lat }}, lon: {{ s.lon }}</li>
-    </ul>
-
-    <pre>{{ xml }}</pre>
-  </template>
+  <MapView :route="route" v-if="route" />
 </template>
