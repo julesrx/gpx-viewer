@@ -2,16 +2,16 @@
 import type { Route } from './gpx';
 import { parseXml } from './xml';
 import { getRoute } from './gpx';
+import FileInput from './components/FileInput.vue';
 import MapView from './components/MapView.vue';
 
-const xml = ref<string>();
 const route = ref<Route | null>(null);
 
 const onChange = (e: Event) => {
+  route.value = null;
+
   const input = e.target as HTMLInputElement;
   if (!input.files || !input.files.length) return;
-
-  route.value = null;
 
   const gpx = input.files[0];
 
@@ -19,20 +19,14 @@ const onChange = (e: Event) => {
   rd.readAsText(gpx);
 
   rd.onload = () => {
-    xml.value = rd.result as string;
-    const doc = parseXml(xml.value);
+    const xml = rd.result as string;
+    const doc = parseXml(xml);
     route.value = getRoute(doc);
   };
 };
 </script>
 
 <template>
-  <input type="file" @change="onChange" />
+  <FileInput @change="onChange" />
   <MapView :route="route" v-if="route" />
 </template>
-
-<style scoped>
-input {
-  height: var(--input-height);
-}
-</style>
