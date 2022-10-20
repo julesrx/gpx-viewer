@@ -1,31 +1,10 @@
 <script setup lang="ts">
 import { parseXml } from './xml';
+import { getRoute } from './gpx';
+import type { Route } from './gpx';
 
 const xml = ref<string>();
-
-type Route = {
-  name?: string;
-  createdDate?: string;
-  points: Coordinate[];
-  trace: Trace;
-};
-
-type Coordinate = {
-  name?: string;
-  lat: number;
-  lon: number;
-};
-
-type Trace = {
-  segments: Segment[];
-};
-
-type Segment = {
-  lat: number;
-  lon: number;
-};
-
-const route = reactive<Route>({ points: [], trace: { segments: [] } });
+const route = ref<Route>();
 
 const onChange = (e: Event) => {
   const input = e.target as HTMLInputElement;
@@ -39,24 +18,7 @@ const onChange = (e: Event) => {
   rd.onload = () => {
     xml.value = rd.result as string;
     const doc = parseXml(xml.value);
-
-    route.name = doc.querySelector('metadata > name')?.innerHTML;
-    route.createdDate = doc.querySelector('metadata > time')?.innerHTML;
-
-    for (const point of doc.querySelectorAll('rte rtept')) {
-      route.points.push({
-        name: point.querySelector('name')?.innerHTML,
-        lat: Number(point.getAttribute('lat')!),
-        lon: Number(point.getAttribute('lon')!)
-      });
-    }
-
-    for (const segment of doc.querySelectorAll('trk trkseg trkpt')) {
-      route.trace.segments.push({
-        lat: Number(segment.getAttribute('lat')!),
-        lon: Number(segment.getAttribute('lon')!)
-      });
-    }
+    route.value = getRoute(doc);
   };
 };
 </script>
@@ -64,7 +26,7 @@ const onChange = (e: Event) => {
 <template>
   <input type="file" @change="onChange" />
 
-  <template v-if="xml">
+  <template v-if="route">
     <h1>{{ route.name }}</h1>
     <p>Created {{ route.createdDate }}</p>
 
