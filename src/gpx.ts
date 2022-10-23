@@ -45,4 +45,4 @@ const getRoute = (doc: Document) => {
 };
 
 export { getRoute };
-export type { Route, Coordinate };
+export type { Route, Coordinate, Segment };

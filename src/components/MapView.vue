@@ -9,8 +9,9 @@ import VectorLayer from 'ol/layer/Vector';
 import VectorSource from 'ol/source/Vector';
 import Feature from 'ol/Feature';
 import Point from 'ol/geom/Point';
+import LineString from 'ol/geom/LineString';
 
-import type { Route, Coordinate } from '../gpx';
+import type { Route, Coordinate, Segment } from '../gpx';
 
 const props = defineProps<{ route: Route }>();
 
@@ -45,14 +46,36 @@ onMounted(() => {
   const layer = new VectorLayer({ source: source });
 
   source.clear(true);
-  for (const point of props.route.points) {
-    source.addFeatures([new Feature(new Point(fromLonLat([point.lon, point.lat])))]);
+  for (const { lon, lat } of props.route.points) {
+    const point = new Point(fromLonLat([lon, lat]));
+    source.addFeature(new Feature(point));
+  }
+
+  const grouped = props.route.trace.segments.reduce<[Segment, Segment][]>((group, segment, i) => {
+    if (group.length && (i + 1) % 2 === 0) {
+      group[group.length - 1] = [group[group.length - 1][0], segment];
+    } else {
+      group.push([segment, { lat: 0, lon: 0 }]);
+    }
+
+    return group;
+  }, []);
+
+  for (const group of grouped) {
+    if (group[1].lon === 0 && group[1].lat === 0) continue;
+
+    const line = new LineString([
+      fromLonLat([group[0].lon, group[0].lat]),
+      fromLonLat([group[1].lon, group[1].lat])
+    ]);
+
+    source.addFeature(new Feature(line));
   }
 
   map.addLayer(layer);
-
-  console.log(map);
 });
+
+onUnmounted(() => map?.dispose());
 </script>
 
 <template>
