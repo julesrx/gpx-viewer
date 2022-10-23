@@ -79,11 +79,12 @@ onUnmounted(() => map?.dispose());
 </script>
 
 <template>
-  <div id="map-view" class="is-full-width"></div>
+  <div id="map-view"></div>
 </template>
 
 <style scoped>
 #map-view {
+  width: 100vh;
   height: calc(100vh - var(--input-height));
 }
 </style>

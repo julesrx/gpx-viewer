@@ -2,7 +2,6 @@
 const emit = defineEmits<{ (e: 'change', v: Event): void }>();
 
 const input = ref<HTMLInputElement>();
-
 const onClear = () => {
   if (!input.value) return;
   input.value.value = '';
@@ -19,30 +18,26 @@ const onClear = () => {
       @change="e => emit('change', e)"
       accept="application/xml,.xml,.gpx"
     />
+
     <span @click="onClear">&times;</span>
   </div>
 </template>
 
 <style scoped>
 div {
-  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--input-height);
+  padding: 0 0.5em;
 }
 
 span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  right: 0;
-  top: 0;
-  font-size: 2em;
-  height: var(--input-height);
-  width: var(--input-height);
   cursor: pointer;
+  font-size: 2em;
 }
 
 input {
-  height: var(--input-height);
-  border: 1px solid transparent !important;
+  border: none;
 }
 </style>
