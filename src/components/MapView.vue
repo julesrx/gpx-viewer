@@ -5,17 +5,15 @@ import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
-import VectorLayer from 'ol/layer/Vector';
-import VectorSource from 'ol/source/Vector';
-import Feature from 'ol/Feature';
-import Point from 'ol/geom/Point';
-import LineString from 'ol/geom/LineString';
 
 import type { Route, Coordinate, Segment } from '../gpx';
+import { drawPoints, drawTrace } from '../map';
 
 const props = defineProps<{ route: Route }>();
 
 const firstPoint = computed(() => props.route.points[0]);
+const lastPoint = computed(() => props.route.points[props.route.points.length - 1]);
+
 const average = computed<Coordinate>(() => {
   const pointCount = props.route.points.length;
   const lonAv = props.route.points.map(p => p.lon).reduce((a, b) => a + b, 0) / pointCount;
@@ -31,48 +29,15 @@ let map: Map;
 onMounted(() => {
   map = new Map({
     target: 'map-view',
-    layers: [
-      new TileLayer({
-        source: new OSM()
-      })
-    ],
+    layers: [new TileLayer({ source: new OSM() })],
     view: new View({
-      center: fromLonLat([average.value.lon, firstPoint.value.lat]),
+      center: fromLonLat([average.value.lon, average.value.lat]),
       zoom: 10
     })
   });
 
-  const source = new VectorSource();
-  const layer = new VectorLayer({ source: source });
-
-  source.clear(true);
-  for (const { lon, lat } of props.route.points) {
-    const point = new Point(fromLonLat([lon, lat]));
-    source.addFeature(new Feature(point));
-  }
-
-  const grouped = props.route.trace.segments.reduce<[Segment, Segment][]>((group, segment, i) => {
-    if (group.length && (i + 1) % 2 === 0) {
-      group[group.length - 1] = [group[group.length - 1][0], segment];
-    } else {
-      group.push([segment, { lat: 0, lon: 0 }]);
-    }
-
-    return group;
-  }, []);
-
-  for (const group of grouped) {
-    if (group[1].lon === 0 && group[1].lat === 0) continue;
-
-    const line = new LineString([
-      fromLonLat([group[0].lon, group[0].lat]),
-      fromLonLat([group[1].lon, group[1].lat])
-    ]);
-
-    source.addFeature(new Feature(line));
-  }
-
-  map.addLayer(layer);
+  drawPoints(map, props.route.points);
+  drawTrace(map, props.route.trace.segments, firstPoint.value, lastPoint.value);
 });
 
 onUnmounted(() => map?.dispose());
@@ -82,9 +47,8 @@ onUnmounted(() => map?.dispose());
   <div id="map-view"></div>
 </template>
 
-<style scoped>
+<style>
 #map-view {
-  width: 100vh;
   height: calc(100vh - var(--input-height));
 }
 </style>
