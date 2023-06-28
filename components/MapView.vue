@@ -6,8 +6,7 @@ import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
 
-import type { Route, Coordinate, Segment } from '../gpx';
-import { drawPoints, drawTrace } from '../map';
+import type { Route, Coordinate } from '~/types';
 
 const props = defineProps<{ route: Route }>();
 

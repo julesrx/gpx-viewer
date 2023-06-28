@@ -1,9 +1,5 @@
 <script setup lang="ts">
-import type { Route } from './gpx';
-import { parseXml } from './xml';
-import { getRoute } from './gpx';
-import FileInput from './components/FileInput.vue';
-import MapView from './components/MapView.vue';
+import type { Route } from '~/types';
 
 const route = ref<Route | null>(null);
 
