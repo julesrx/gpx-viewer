@@ -5,6 +5,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "generate:gh": "NUXT_APP_BASE_URL=/gpx-viewer/ nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },

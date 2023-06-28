@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     head: {
       htmlAttrs: { lang: 'en' },
       title: 'GPX Viewer',
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.png' }]
+      link: [{ rel: 'icon', type: 'image/x-icon', href: '/gpx-viewer/favicon.png' }]
     }
   }
 });
