@@ -1,5 +1,6 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
+  ssr: false,
   css: ['@/assets/main.css'],
   typescript: { typeCheck: true, strict: true },
   app: {
