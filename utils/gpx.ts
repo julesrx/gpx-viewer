@@ -1,24 +1,4 @@
-type Coordinate = {
-  lat: number;
-  lon: number;
-};
-
-interface Route {
-  name?: string;
-  createdDate?: string;
-  points: Point[];
-  trace: Trace;
-}
-
-interface Point extends Coordinate {
-  name?: string;
-}
-
-interface Trace {
-  segments: Segment[];
-}
-
-interface Segment extends Coordinate {}
+import type { Route } from '~/types';
 
 const getRoute = (doc: Document) => {
   const route: Route = { points: [], trace: { segments: [] } };
@@ -45,4 +25,3 @@ const getRoute = (doc: Document) => {
 };
 
 export { getRoute };
-export type { Route, Coordinate, Segment, Point };

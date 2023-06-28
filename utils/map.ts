@@ -6,7 +6,7 @@ import Feature from 'ol/Feature';
 import LineString from 'ol/geom/LineString';
 import OlPoint from 'ol/geom/Point';
 
-import type { Route, Coordinate, Segment, Point } from './gpx';
+import type { Segment, Point } from '~/types';
 
 const drawPoints = (map: Map, points: Point[]) => {
   const source = new VectorSource();

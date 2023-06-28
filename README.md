@@ -1,14 +1,63 @@
-# GPX Viewer
+# Nuxt 3 Minimal Starter
 
-![GitHub Pages](https://github.com/julesrx/gpx-viewer/actions/workflows/gh-pages.yml/badge.svg?branch=main)
+Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
-Quickly visualize your GPX files on a map.  
-Built with [Vue](https://vuejs.org/),  [Vite](https://vitejs.dev/) and [OpenLayers](https://openlayers.org/).
+## Setup
 
-## How to run
+Make sure to install the dependencies:
+
+```bash
+# npm
+npm install
+
+# pnpm
+pnpm install
+
+# yarn
+yarn install
 ```
-git clone git@github.com:julesrx/gpx-viewer.git
-cd gpx-viewer
-pnpm i
-pnpm dev
+
+## Development Server
+
+Start the development server on `http://localhost:3000`:
+
+```bash
+# npm
+npm run dev
+
+# pnpm
+pnpm run dev
+
+# yarn
+yarn dev
 ```
+
+## Production
+
+Build the application for production:
+
+```bash
+# npm
+npm run build
+
+# pnpm
+pnpm run build
+
+# yarn
+yarn build
+```
+
+Locally preview production build:
+
+```bash
+# npm
+npm run preview
+
+# pnpm
+pnpm run preview
+
+# yarn
+yarn preview
+```
+
+Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
