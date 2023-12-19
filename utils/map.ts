@@ -6,9 +6,7 @@ import Feature from 'ol/Feature';
 import LineString from 'ol/geom/LineString';
 import OlPoint from 'ol/geom/Point';
 
-import type { Segment, Point } from '~/types';
-
-const drawPoints = (map: Map, points: Point[]) => {
+export const drawPoints = (map: Map, points: Point[]) => {
   const source = new VectorSource();
   const layer = new VectorLayer({ source });
 
@@ -21,7 +19,7 @@ const drawPoints = (map: Map, points: Point[]) => {
   map.addLayer(layer);
 };
 
-const drawTrace = (map: Map, segments: Segment[], firstPoint: Point, lastPoint: Point) => {
+export const drawTrace = (map: Map, segments: Segment[], firstPoint: Point, lastPoint: Point) => {
   const firstSegment = computed(() => segments[0]);
 
   const source = new VectorSource();
@@ -50,4 +48,24 @@ const drawTrace = (map: Map, segments: Segment[], firstPoint: Point, lastPoint: 
   map.addLayer(layer);
 };
 
-export { drawPoints, drawTrace };
+export type Coordinate = {
+  lat: number;
+  lon: number;
+};
+
+export interface Route {
+  name?: string;
+  createdDate?: string;
+  points: Point[];
+  trace: Trace;
+}
+
+export interface Point extends Coordinate {
+  name?: string;
+}
+
+export interface Trace {
+  segments: Segment[];
+}
+
+export interface Segment extends Coordinate {}

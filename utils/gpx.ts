@@ -1,6 +1,4 @@
-import type { Route } from '~/types';
-
-const getRoute = (doc: Document) => {
+export const getRoute = (doc: Document) => {
   const route: Route = { points: [], trace: { segments: [] } };
 
   route.name = doc.querySelector('metadata > name')?.innerHTML;
@@ -23,5 +21,3 @@ const getRoute = (doc: Document) => {
 
   return route;
 };
-
-export { getRoute };

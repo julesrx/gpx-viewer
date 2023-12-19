@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import type { Route } from '~/types';
-
 const route = ref<Route | null>(null);
 
 const onChange = (e: Event) => {
@@ -26,3 +24,21 @@ const onChange = (e: Event) => {
   <FileInput @change="onChange" />
   <MapView :route="route" v-if="route" />
 </template>
+
+<style>
+:root {
+  --input-height: 45px;
+}
+
+html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  color: #f5f5f5;
+  background-color: #242424;
+}
+</style>

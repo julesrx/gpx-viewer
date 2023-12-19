@@ -1,12 +1,9 @@
 <script lang="ts" setup>
-import 'ol/ol.css';
 import Map from 'ol/Map';
 import OSM from 'ol/source/OSM';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
 import { fromLonLat } from 'ol/proj';
-
-import type { Route, Coordinate } from '~/types';
 
 const props = defineProps<{ route: Route }>();
 

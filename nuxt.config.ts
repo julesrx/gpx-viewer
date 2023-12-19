@@ -1,7 +1,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
-  css: ['@/assets/main.css'],
+  css: ['ol/ol.css'],
   typescript: { typeCheck: true, strict: true },
   app: {
     head: {
