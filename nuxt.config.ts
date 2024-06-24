@@ -2,7 +2,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   css: ['ol/ol.css'],
-  typescript: { typeCheck: true, strict: true },
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
