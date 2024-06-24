@@ -7,21 +7,24 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v4
         with:
           run_install: true
-          version: 8
+          version: 9
 
       - name: Build
         run: |
-          pnpm generate:gh
+          NUXT_APP_BASE_URL=/gpx-viewer/ pnpm generate
 
       - uses: peaceiris/actions-gh-pages@v3
         with:
