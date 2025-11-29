@@ -7,13 +7,17 @@ import { fromLonLat } from 'ol/proj';
 
 const props = defineProps<{ route: Route }>();
 
-const firstPoint = computed(() => props.route.points[0]);
-const lastPoint = computed(() => props.route.points[props.route.points.length - 1]);
+const firstPoint = computed(() => props.route.points.at(0)!);
+const lastPoint = computed(() => props.route.points.at(-1)!);
 
 const average = computed<Coordinate>(() => {
   const pointCount = props.route.points.length;
-  const lonAv = props.route.points.map(p => p.lon).reduce((a, b) => a + b, 0) / pointCount;
-  const latAv = props.route.points.map(p => p.lat).reduce((a, b) => a + b, 0) / pointCount;
+  const lonAv =
+    props.route.points.map((p) => p.lon).reduce((a, b) => a + b, 0) /
+    pointCount;
+  const latAv =
+    props.route.points.map((p) => p.lat).reduce((a, b) => a + b, 0) /
+    pointCount;
 
   return {
     lon: lonAv,

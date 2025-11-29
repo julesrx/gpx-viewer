@@ -7,7 +7,7 @@ const onChange = (e: Event) => {
   const input = e.target as HTMLInputElement;
   if (!input.files || !input.files.length) return;
 
-  const gpx = input.files[0];
+  const gpx = input.files[0]!;
 
   const rd = new FileReader();
   rd.readAsText(gpx);
@@ -31,8 +31,8 @@ const onChange = (e: Event) => {
 }
 
 html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 body {
